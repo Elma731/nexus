@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Pro — Crypto Trading Dashboard</title>
+
+  <!-- OG Meta Tags -->
+  <meta property="og:title" content="Nexus Pro — Crypto Trading Dashboard" />
+  <meta property="og:description" content="Professional crypto analytics and trading dashboard. Track markets, portfolio, and key metrics in real-time." />
+  <meta property="og:image" content="assets/og-image.png" />
+  <meta property="og:url" content="https://nexus.app" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@nexusapp" />
+  <meta name="twitter:title" content="Nexus Pro — Crypto Trading Dashboard" />
+  <meta name="twitter:description" content="Professional crypto analytics and trading dashboard." />
+  <meta name="twitter:image" content="assets/og-image.png" />
+
+  <!-- Favicon: inline SVG data URI -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%237B6FF0'/%3E%3Cstop offset='100%25' stop-color='%23A78BFA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='16' fill='url(%23g)'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='16' fill='white'%3EN%3C/text%3E%3C/svg%3E" />
+
+  <!-- Google Fonts: Manrope + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- ApexCharts -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- NAVBAR                                  -->
+  <!-- ═══════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-left">
+      <div class="nav-logo">
+        <div class="logo-icon">N</div>
+        <span class="logo-text">nexus</span>
+        <span class="logo-badge">PRO</span>
+      </div>
+      <div class="wallet-pill">
+        <span class="wallet-dot"></span>
+        <code class="wallet-addr">0x7f3b...220F</code>
+        <span class="wallet-copy"><i class="bi bi-copy"></i></span>
+      </div>
+    </div>
+
+    <div class="nav-center">
+      <div class="nav-tabs">
+        <button class="nav-tab" data-page="trade">Trade</button>
+        <button class="nav-tab active" data-page="explore">Explore</button>
+        <button class="nav-tab" data-page="portfolio">Portfolio</button>
+        <button class="nav-tab" data-page="megavault">MegaVault</button>
+        <button class="nav-tab" data-page="analytics">Analytics</button>
+        <button class="nav-tab" data-page="leaderboard">Leaderboard</button>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <div class="nav-search-wrap">
+        <i class="bi bi-search"></i>
+        <input type="text" id="navSearchInput" placeholder="Search Coins..." autocomplete="off" />
+      </div>
+      <button class="nav-icon-btn" aria-label="Notifications">
+        <i class="bi bi-bell"></i>
+        <span class="notif-dot"></span>
+      </button>
+      <button class="nav-icon-btn" id="themeToggle" aria-label="Toggle theme">
+        <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+      </button>
+      <div class="nav-clock" id="navClock">00:00:00</div>
+      <div class="nav-avatar" aria-label="User menu" tabindex="0">AJ</div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TICKER STRIP                            -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <span class="ticker-label">LIVE</span>
+    <div class="ticker-viewport">
+      <div class="ticker-track" id="tickerTrack"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- APP CONTENT                             -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="app-content">
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- PAGE: EXPLORE (active)                -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="page active" id="page-explore">
+
+      <!-- Page Header -->
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Nexus Dashboard</h1>
+          <p class="page-sub">Track crypto markets and key metrics in real-time.</p>
+        </div>
+        <div class="head-search">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Search Coins..." autocomplete="off" />
+        </div>
+      </div>
+
+      <!-- ROW 1: Trending + Movers + Mini Stats -->
+      <div class="r1-grid">
+
+        <!-- Trending Assets -->
+        <div class="card" id="card-trending">
+          <div class="card-head">
+            <span class="card-title">Trending Assets</span>
+            <a class="view-all" href="#">View all Assets →</a>
+          </div>
+          <div class="asset-table" id="trendingTable"></div>
+        </div>
+
+        <!-- Market Movers -->
+        <div class="card" id="card-movers">
+          <div class="card-head">
+            <span class="card-title">Market Movers</span>
+            <a class="view-all" href="#">View all Assets →</a>
+          </div>
+          <div class="asset-table" id="moversTable"></div>
+        </div>
+
+        <!-- Mini Stats Stack -->
+        <div class="col-stack">
+
+          <!-- Market Cap -->
+          <div class="card mini-stat">
+            <span class="mini-label">Market Cap</span>
+            <div class="mini-val" data-target="2180000000000">$2.18T</div>
+            <div class="mini-change positive">+$4.9M / 24h ↑</div>
+            <div class="mini-chart-wrap" id="mcapBars"></div>
+          </div>
+
+          <!-- 24h Volume -->
+          <div class="card mini-stat">
+            <span class="mini-label">24h Volume</span>
+            <div class="mini-val">$89.4B</div>
+            <div class="mini-change positive">+2.1% from yesterday</div>
+            <div class="mini-chart-wrap" id="volArea"></div>
+          </div>
+
+          <!-- BTC Dominance -->
+          <div class="card mini-stat">
+            <span class="mini-label">BTC Dominance</span>
+            <div id="btcDomChart"></div>
+            <div class="dom-meta"><span>BTC: 52.31% · Alt: 47.69%</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ROW 2: Candlestick + Area Chart -->
+      <div class="r2-grid">
+
+        <!-- Candlestick Chart Card -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <p class="card-label">Total Volume</p>
+              <div class="big-num">≈$1B</div>
+              <p class="card-sub">30-day trading volume</p>
+            </div>
+          </div>
+          <div id="candlestickChart" style="min-height:220px;"></div>
+          <div class="time-tabs">
+            <button class="t-tab active" data-period="1d">1D</button>
+            <button class="t-tab" data-period="1w">1W</button>
+            <button class="t-tab" data-period="1m">1M</button>
+            <button class="t-tab" data-period="3m">3M</button>
+          </div>
+        </div>
+
+        <!-- Area Chart Card -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <p class="card-label">Total Trending Volume</p>
+              <div class="big-num">≈$1B</div>
+            </div>
+          </div>
+          <div id="areaChart" style="min-height:220px;"></div>
+          <div class="time-tabs">
+            <button class="t-tab active" data-period="1d">1D</button>
+            <button class="t-tab" data-period="1w">1W</button>
+            <button class="t-tab" data-period="1m">1M</button>
+            <button class="t-tab" data-period="3m">3M</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ROW 3: Live Markets Table -->
+      <div class="r3-wrap">
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Live Markets</span>
+            <div class="table-controls">
+              <div class="tbl-search">
+                <i class="bi bi-search"></i>
+                <input type="text" id="marketSearch" placeholder="Search..." autocomplete="off" />
+              </div>
+              <div class="filter-tabs" role="group" aria-label="Market filter">
+                <button class="f-tab active" data-filter="all">All</button>
+                <button class="f-tab" data-filter="defi">DeFi</button>
+                <button class="f-tab" data-filter="layer1">Layer 1</button>
+                <button class="f-tab" data-filter="layer2">Layer 2</button>
+                <button class="f-tab" data-filter="meme">Meme</button>
+                <button class="f-tab" data-filter="stables">Stables</button>
+              </div>
+            </div>
+          </div>
+          <div class="tbl-scroll">
+            <table class="mkt-table" id="mktTable">
+              <thead>
+                <tr>
+                  <th class="th-rank">#</th>
+                  <th>Asset</th>
+                  <th class="th-r sortable" data-sort="price">Price <i class="bi bi-arrow-down-up"></i></th>
+                  <th class="th-r sortable" data-sort="c24">24h % <i class="bi bi-arrow-down-up"></i></th>
+                  <th class="th-r sortable" data-sort="c7">7d % <i class="bi bi-arrow-down-up"></i></th>
+                  <th class="th-r sortable" data-sort="mcap">Market Cap <i class="bi bi-arrow-down-up"></i></th>
+                  <th class="th-r">Volume</th>
+                  <th>Chart</th>
+                  <th>Trade</th>
+                </tr>
+              </thead>
+              <tbody id="mktTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 4: Activity + Portfolio Donut + Fear & Greed -->
+      <div class="r4-grid">
+
+        <!-- Recent Activity -->
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Recent Activity</span>
+            <button class="btn-link">View all →</button>
+          </div>
+          <div id="activityList"></div>
+        </div>
+
+        <!-- My Portfolio Donut -->
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">My Portfolio</span>
+          </div>
+          <div id="portfolioDonut"></div>
+          <div class="port-legend" id="portLegend"></div>
+        </div>
+
+        <!-- Fear & Greed Index -->
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Fear &amp; Greed Index</span>
+          </div>
+          <div id="fearGreedGauge"></div>
+          <div class="sentiment-bars" id="sentimentBars"></div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <footer class="nexus-footer">
+        <div class="footer-inner">
+          <div class="footer-left">
+            <div class="footer-brand">
+              <div class="logo-icon logo-sm">N</div>
+              <span class="footer-name">nexus</span>
+            </div>
+            <p class="footer-tag">Professional crypto analytics. Available worldwide.</p>
+            <p class="footer-gdpr">
+              <i class="bi bi-shield-check"></i>
+              We never sell your data. GDPR compliant.
+              <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a>.
+            </p>
+          </div>
+          <div class="footer-right">
+            <div class="footer-links">
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Service</a>
+              <a href="#">Cookie Policy</a>
+              <a href="#">Help Center</a>
+              <a href="#">Status</a>
+            </div>
+            <p class="footer-copy">© 2026 Nexus Analytics, Inc. Prices in USD. Not financial advice.</p>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <!-- /page-explore -->
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- PAGE: PORTFOLIO                        -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="page" id="page-portfolio">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">My Portfolio</h1>
+          <p class="page-sub">Your holdings and performance</p>
+        </div>
+      </div>
+
+      <!-- Summary KPI Cards -->
+      <div class="port-summary-grid">
+        <div class="port-kpi">
+          <span class="pkl">Total Value</span>
+          <span class="pkv">$42,847.32</span>
+          <span class="pkc positive">+$1,203 today</span>
+        </div>
+        <div class="port-kpi">
+          <span class="pkl">Invested</span>
+          <span class="pkv">$35,200</span>
+          <span class="pkc neutral">cost basis</span>
+        </div>
+        <div class="port-kpi">
+          <span class="pkl">Total P&amp;L</span>
+          <span class="pkv">+$7,647.32</span>
+          <span class="pkc positive">+21.72% all time</span>
+        </div>
+        <div class="port-kpi">
+          <span class="pkl">Best Return</span>
+          <span class="pkv">Solana</span>
+          <span class="pkc positive">+52.0% ROI</span>
+        </div>
+      </div>
+
+      <!-- Portfolio Charts Row -->
+      <div class="port-charts-row">
+        <div class="card">
+          <h3 class="card-title" style="margin-bottom:14px;">Holdings Breakdown</h3>
+          <div id="holdingsChart"></div>
+        </div>
+        <div class="card">
+          <h3 class="card-title" style="margin-bottom:14px;">Portfolio Growth</h3>
+          <div id="growthChart"></div>
+        </div>
+      </div>
+
+      <!-- Holdings Table -->
+      <div class="card" style="margin-bottom:24px;">
+        <h3 class="card-title" style="margin-bottom:14px;">My Holdings</h3>
+        <div class="tbl-scroll">
+          <table class="mkt-table" id="holdingsTable">
+            <thead>
+              <tr>
+                <th>Asset</th>
+                <th class="th-r">Holdings</th>
+                <th class="th-r">Avg Buy</th>
+                <th class="th-r">Price</th>
+                <th class="th-r">Value</th>
+                <th class="th-r">P&amp;L</th>
+                <th class="th-r">ROI</th>
+                <th class="th-r">Allocation</th>
+              </tr>
+            </thead>
+            <tbody id="holdingsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- /page-portfolio -->
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- PAGE: TRADE (Coming Soon)             -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="page" id="page-trade">
+      <div class="coming-soon">
+        <i class="bi bi-arrow-left-right"></i>
+        <h2>Trade</h2>
+        <p>This section is coming soon.</p>
+        <button class="btn btn-primary">Go to Explore</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- PAGE: MEGAVAULT (Coming Soon)         -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="page" id="page-megavault">
+      <div class="coming-soon">
+        <i class="bi bi-safe2"></i>
+        <h2>MegaVault</h2>
+        <p>This section is coming soon.</p>
+        <button class="btn btn-primary">Go to Explore</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- PAGE: ANALYTICS (Coming Soon)         -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="page" id="page-analytics">
+      <div class="coming-soon">
+        <i class="bi bi-bar-chart-line"></i>
+        <h2>Analytics</h2>
+        <p>This section is coming soon.</p>
+        <button class="btn btn-primary">Go to Explore</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- PAGE: LEADERBOARD (Coming Soon)       -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="page" id="page-leaderboard">
+      <div class="coming-soon">
+        <i class="bi bi-trophy"></i>
+        <h2>Leaderboard</h2>
+        <p>This section is coming soon.</p>
+        <button class="btn btn-primary">Go to Explore</button>
+      </div>
+    </div>
+
+  </div>
+  <!-- /app-content -->
+
+  <!-- Main JS -->
+  <script src="js/main.js"></script>
+</body>
+</html>
