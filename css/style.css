@@ -35,17 +35,19 @@
 
 /* ── Light Theme Override ────────────────────── */
 [data-theme="light"] {
-  --bg: #EDEBF7;
-  --bg-card: #FDFAFF;
-  --bg-card2: #F2EEFF;
-  --bg-input: #EDE9F8;
-  --border: #D4CFF0;
-  --border-2: #BDB5E8;
-  --text-1: #18152C;
-  --text-2: #524D7A;
-  --text-3: #8E8AB2;
-  --glow: rgba(123,111,240,0.08);
-  --shadow: 0 4px 24px rgba(123,111,240,0.12);
+  --bg:       #F0F2FA;
+  --bg-card:  #FFFFFF;
+  --bg-card2: #E8ECF4;
+  --bg-input: #F0F2FA;
+  --border:   #E8ECF4;
+  --border-2: #D0D9ED;
+  --positive: #059669;
+  --negative: #DC2626;
+  --text-1:   #1A1D2E;
+  --text-2:   #5A6478;
+  --text-3:   #9AA3B2;
+  --glow:     rgba(108,99,255,0.06);
+  --shadow:   0 4px 24px rgba(108,99,255,0.10);
 }
 
 /* ── Reset & Base ────────────────────────────── */
@@ -385,7 +387,8 @@ select {
 }
 
 [data-theme="light"] .ticker-wrap {
-  background: #F2EEF8;
+  background: #F0F2FA;
+  border-bottom: 1px solid #E8ECF4;
 }
 
 .ticker-label {
@@ -1421,6 +1424,49 @@ select {
 }
 
 /* ══════════════════════════════════════════════
+   LIGHT MODE — TARGETED OVERRIDES
+   (elements with hardcoded dark values)
+   ══════════════════════════════════════════════ */
+
+/* Navbar */
+[data-theme="light"] .wallet-pill {
+  background: #E8ECF4;
+  border-color: #D0D9ED;
+}
+
+/* Table — hardcoded dark row border */
+[data-theme="light"] .mkt-table tbody tr {
+  border-bottom: 1px solid #E8ECF4;
+}
+[data-theme="light"] .mkt-table tbody tr:hover {
+  background: rgba(108,99,255,0.04);
+}
+
+/* Asset row / activity hover */
+[data-theme="light"] .asset-row:hover {
+  background: rgba(108,99,255,0.04);
+}
+[data-theme="light"] .act-row:hover {
+  background: rgba(108,99,255,0.04);
+}
+
+/* Coin icon circles — solid brand bg + white text */
+[data-theme="light"] .btc-logo   { background: #F7931A; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .eth-logo   { background: #627EEA; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .sol-logo   { background: #9945FF; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .bnb-logo   { background: #F3BA2F; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .xrp-logo   { background: #00AAE4; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .ada-logo   { background: #4A90E2; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .avax-logo  { background: #E84142; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .dot-logo   { background: #E6007A; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .link-logo  { background: #2A5ADA; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .matic-logo { background: #8247E5; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .uni-logo   { background: #FF007A; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .atom-logo  { background: #8B8FA8; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .arb-logo   { background: #298FC8; color: #FFFFFF !important; font-weight: 700; }
+[data-theme="light"] .ltc-logo   { background: #7E8293; color: #FFFFFF !important; font-weight: 700; }
+
+/* ══════════════════════════════════════════════
    FOOTER
    ══════════════════════════════════════════════ */
 .nexus-footer {
@@ -1507,6 +1553,15 @@ select {
 .footer-copy {
   font-size: 11px;
   color: var(--text-3);
+}
+
+[data-theme="light"] .nexus-footer {
+  background: #F4F6FA;
+  border-top: 1px solid #E8ECF4;
+}
+
+[data-theme="light"] .footer-links a:hover {
+  color: #6C63FF;
 }
 
 /* ══════════════════════════════════════════════

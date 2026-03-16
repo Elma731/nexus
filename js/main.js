@@ -180,6 +180,7 @@ function setTheme(t) {
   if (icon) {
     icon.className = t === 'dark' ? 'bi bi-moon-stars-fill' : 'bi bi-sun-fill';
   }
+  updateChartsTheme(t);
 }
 
 function initTheme() {
@@ -601,6 +602,76 @@ function renderHoldingsTable() {
 }
 
 /* ══════════════════════════════════════════════
+   APEXCHARTS — THEME REGISTRY & UPDATER
+   ══════════════════════════════════════════════ */
+const chartRegistry = {};   // keyed by name → ApexCharts instance
+
+function updateChartsTheme(t) {
+  const isDark    = t === 'dark';
+  const axisColor = isDark ? '#9B96C4' : '#5A6478';
+  const gridColor = isDark ? '#2A2640' : '#E8ECF4';
+  const tipTheme  = isDark ? 'dark'    : 'light';
+  const textColor = isDark ? '#F1F0FF' : '#1A1D2E';
+  const altSlice  = isDark ? '#2A2640' : '#E8ECF4';
+
+  const axisUpdate = {
+    xaxis: { labels: { style: { colors: axisColor } } },
+    yaxis: { labels: { style: { colors: axisColor } } },
+    grid:  { borderColor: gridColor },
+    tooltip: { theme: tipTheme }
+  };
+
+  // Line / area / candlestick charts
+  ['candle', 'area', 'growth'].forEach(k => {
+    if (chartRegistry[k]) chartRegistry[k].updateOptions(axisUpdate, false, false);
+  });
+
+  // Donut / radial charts — also update inner text colors
+  const donutLabelUpdate = {
+    ...axisUpdate,
+    plotOptions: {
+      pie: {
+        donut: {
+          labels: {
+            show: true,
+            total: { color: textColor },
+            value: { color: textColor }
+          }
+        }
+      }
+    }
+  };
+  ['btcDom', 'portfolioDonut', 'holdings'].forEach(k => {
+    if (chartRegistry[k]) {
+      // btcDom altcoin slice color switches with theme
+      if (k === 'btcDom') {
+        chartRegistry[k].updateOptions({
+          ...donutLabelUpdate,
+          colors: ['#7B6FF0', altSlice]
+        }, false, false);
+      } else {
+        chartRegistry[k].updateOptions(donutLabelUpdate, false, false);
+      }
+    }
+  });
+
+  // Fear & Greed radial
+  if (chartRegistry['fearGreed']) {
+    chartRegistry['fearGreed'].updateOptions({
+      tooltip: { theme: tipTheme },
+      plotOptions: {
+        radialBar: {
+          dataLabels: {
+            name:  { color: isDark ? '#9B96C4' : '#5A6478' },
+            value: { color: textColor }
+          }
+        }
+      }
+    }, false, false);
+  }
+}
+
+/* ══════════════════════════════════════════════
    APEXCHARTS — CANDLESTICK
    ══════════════════════════════════════════════ */
 let candleChart = null;
@@ -675,6 +746,7 @@ function initCandlestickChart() {
 
   candleChart = new ApexCharts(el, options);
   candleChart.render();
+  chartRegistry['candle'] = candleChart;
 }
 
 /* ══════════════════════════════════════════════
@@ -750,6 +822,7 @@ function initAreaChart() {
 
   areaChartInstance = new ApexCharts(el, options);
   areaChartInstance.render();
+  chartRegistry['area'] = areaChartInstance;
 }
 
 /* ══════════════════════════════════════════════
@@ -806,6 +879,7 @@ function initBTCDomChart() {
 
   const chart = new ApexCharts(el, options);
   chart.render();
+  chartRegistry['btcDom'] = chart;
 }
 
 /* ══════════════════════════════════════════════
@@ -861,6 +935,7 @@ function initPortfolioDonut() {
 
   const chart = new ApexCharts(el, options);
   chart.render();
+  chartRegistry['portfolioDonut'] = chart;
 }
 
 /* ══════════════════════════════════════════════
@@ -930,6 +1005,7 @@ function initFearGreedGauge() {
 
   const chart = new ApexCharts(el, options);
   chart.render();
+  chartRegistry['fearGreed'] = chart;
 }
 
 /* ══════════════════════════════════════════════
@@ -993,6 +1069,7 @@ function initHoldingsChart() {
 
   const chart = new ApexCharts(el, options);
   chart.render();
+  chartRegistry['holdings'] = chart;
 }
 
 /* ══════════════════════════════════════════════
@@ -1069,6 +1146,7 @@ function initGrowthChart() {
 
   const chart = new ApexCharts(el, options);
   chart.render();
+  chartRegistry['growth'] = chart;
 }
 
 /* ══════════════════════════════════════════════
@@ -1295,6 +1373,9 @@ function init() {
   setTimeout(() => {
     initPortfolioDonut();
     initFearGreedGauge();
+    // Sync all charts to the active theme once fully initialized
+    const activeTheme = document.body.getAttribute('data-theme') || 'dark';
+    if (activeTheme === 'light') updateChartsTheme('light');
   }, 200);
 
   // Entrance animations + tilt
