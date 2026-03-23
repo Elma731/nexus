@@ -80,8 +80,21 @@
       </button>
       <div class="nav-clock" id="navClock">00:00:00</div>
       <div class="nav-avatar" aria-label="User menu" tabindex="0">AJ</div>
+      <button class="nav-hamburger" id="menuToggle" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile Navigation Menu -->
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <button class="mobile-nav-tab" data-page="trade"><i class="bi bi-arrow-left-right"></i> Trade</button>
+    <button class="mobile-nav-tab active" data-page="explore"><i class="bi bi-grid"></i> Explore</button>
+    <button class="mobile-nav-tab" data-page="portfolio"><i class="bi bi-pie-chart"></i> Portfolio</button>
+    <button class="mobile-nav-tab" data-page="megavault"><i class="bi bi-safe2"></i> MegaVault</button>
+    <button class="mobile-nav-tab" data-page="analytics"><i class="bi bi-bar-chart-line"></i> Analytics</button>
+    <button class="mobile-nav-tab" data-page="leaderboard"><i class="bi bi-trophy"></i> Leaderboard</button>
+  </div>
 
   <!-- ═══════════════════════════════════════ -->
   <!-- TICKER STRIP                            -->
@@ -222,6 +235,7 @@
                 <button class="f-tab" data-filter="layer2">Layer 2</button>
                 <button class="f-tab" data-filter="meme">Meme</button>
                 <button class="f-tab" data-filter="stables">Stables</button>
+                <button class="f-tab" data-filter="watchlist">★ Watchlist</button>
               </div>
             </div>
           </div>
@@ -237,6 +251,7 @@
                   <th class="th-r sortable" data-sort="mcap">Market Cap <i class="bi bi-arrow-down-up"></i></th>
                   <th class="th-r">Volume</th>
                   <th>Chart</th>
+                  <th>Watch</th>
                   <th>Trade</th>
                 </tr>
               </thead>

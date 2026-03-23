@@ -60,6 +60,28 @@ const PORTFOLIO_HOLDINGS = [
 const $ = sel => document.querySelector(sel);
 const $$ = sel => document.querySelectorAll(sel);
 
+/* ══════════════════════════════════════════════
+   WATCHLIST
+   ══════════════════════════════════════════════ */
+const WATCHLIST_KEY = 'nexus_watchlist';
+
+function getWatchlist() {
+  return JSON.parse(localStorage.getItem(WATCHLIST_KEY) || '[]');
+}
+
+function isWatchlisted(id) {
+  return getWatchlist().includes(id);
+}
+
+function toggleWatchlist(id) {
+  const list = getWatchlist();
+  const idx = list.indexOf(id);
+  if (idx === -1) list.push(id);
+  else list.splice(idx, 1);
+  localStorage.setItem(WATCHLIST_KEY, JSON.stringify(list));
+  renderMarketTable();
+}
+
 function fmtUSD(n, decimals = 2) {
   if (n === undefined || n === null) return '$0';
   const abs = Math.abs(n);
@@ -231,6 +253,7 @@ function navigateTo(page) {
   });
 
   currentPage = page;
+  syncMobileNavActive(page);
 
   // Lazy-init portfolio charts
   if (page === 'portfolio' && !portfolioChartsInitialized) {
@@ -239,7 +262,10 @@ function navigateTo(page) {
       initHoldingsChart();
       initGrowthChart();
       renderHoldingsTable();
-    }, 80);
+      // Apply current theme to newly-initialized charts (dark colors are baked in at init)
+      const t = document.body.getAttribute('data-theme') || 'dark';
+      updateChartsTheme(t);
+    }, 120);
   }
 }
 
@@ -253,6 +279,61 @@ function initNavigation() {
   // Coming soon "Go to Explore" buttons
   $$('.coming-soon .btn-primary').forEach(btn => {
     btn.addEventListener('click', () => navigateTo('explore'));
+  });
+}
+
+/* ══════════════════════════════════════════════
+   MOBILE MENU
+   ══════════════════════════════════════════════ */
+function initMobileMenu() {
+  const toggleBtn = $('#menuToggle');
+  const mobileNav = $('#mobileNav');
+  if (!toggleBtn || !mobileNav) return;
+
+  function openMenu() {
+    mobileNav.classList.add('open');
+    toggleBtn.classList.add('open');
+    toggleBtn.setAttribute('aria-expanded', 'true');
+    mobileNav.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeMenu() {
+    mobileNav.classList.remove('open');
+    toggleBtn.classList.remove('open');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    mobileNav.setAttribute('aria-hidden', 'true');
+  }
+
+  toggleBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    mobileNav.classList.contains('open') ? closeMenu() : openMenu();
+  });
+
+  // Tap on a mobile nav tab → navigate and close
+  $$('.mobile-nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const page = tab.getAttribute('data-page');
+      navigateTo(page);
+      // Sync active state on mobile tabs
+      $$('.mobile-nav-tab').forEach(t => t.classList.toggle('active', t === tab));
+      closeMenu();
+    });
+  });
+
+  // Tap outside the menu → close
+  document.addEventListener('click', e => {
+    if (mobileNav.classList.contains('open') &&
+        !mobileNav.contains(e.target) &&
+        !toggleBtn.contains(e.target)) {
+      closeMenu();
+    }
+  });
+}
+
+// Keep mobile tab active state in sync when desktop tabs are clicked
+function syncMobileNavActive(page) {
+  $$('.mobile-nav-tab').forEach(t => {
+    t.classList.toggle('active', t.getAttribute('data-page') === page);
   });
 }
 
@@ -432,13 +513,27 @@ function renderMarketTable() {
   const searchVal = ($('#marketSearch') ? $('#marketSearch').value : '').toLowerCase().trim();
   const activeFilter = ($('.f-tab.active') ? $('.f-tab.active').getAttribute('data-filter') : 'all');
 
+  const watchlist = getWatchlist();
+
   let filtered = COINS.filter(c => {
     const matchSearch = !searchVal ||
       c.name.toLowerCase().includes(searchVal) ||
       c.sym.toLowerCase().includes(searchVal);
-    const matchFilter = activeFilter === 'all' || c.cats.includes(activeFilter);
+    const matchFilter = activeFilter === 'all'
+      ? true
+      : activeFilter === 'watchlist'
+      ? watchlist.includes(c.id)
+      : c.cats.includes(activeFilter);
     return matchSearch && matchFilter;
   });
+
+  // Empty state for watchlist
+  if (activeFilter === 'watchlist' && filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:32px;color:var(--text-3);font-size:13px;">
+      No coins in your watchlist yet — click ★ on any coin to add it.
+    </td></tr>`;
+    return;
+  }
 
   tbody.innerHTML = filtered.map(coin => {
     const isUp24 = coin.c24 >= 0;
@@ -465,6 +560,7 @@ function renderMarketTable() {
         <td>
           <div style="width:80px;height:32px;">${sparkSVG}</div>
         </td>
+        <td><button class="watch-btn ${isWatchlisted(coin.id) ? 'active' : ''}" data-watch="${coin.id}" aria-label="Watch ${coin.name}">★</button></td>
         <td><button class="trade-btn">Trade →</button></td>
       </tr>`;
   }).join('');
@@ -655,18 +751,42 @@ function updateChartsTheme(t) {
     }
   });
 
-  // Fear & Greed radial
+  // Fear & Greed radial — also update track background
   if (chartRegistry['fearGreed']) {
     chartRegistry['fearGreed'].updateOptions({
       tooltip: { theme: tipTheme },
       plotOptions: {
         radialBar: {
+          track: { background: isDark ? '#2A2640' : '#E8ECF4' },
           dataLabels: {
             name:  { color: isDark ? '#9B96C4' : '#5A6478' },
             value: { color: textColor }
           }
         }
       }
+    }, false, false);
+  }
+
+  // Donut stroke (ring between slices) — hardcoded dark color
+  ['portfolioDonut', 'holdings', 'btcDom'].forEach(k => {
+    if (chartRegistry[k]) {
+      chartRegistry[k].updateOptions({
+        stroke: { colors: [isDark ? '#13111F' : '#FFFFFF'] }
+      }, false, false);
+    }
+  });
+
+  // Growth chart legend — hardcoded dark label color
+  if (chartRegistry['growth']) {
+    chartRegistry['growth'].updateOptions({
+      legend: { labels: { colors: [axisColor, axisColor] } }
+    }, false, false);
+  }
+
+  // Holdings donut legend — hardcoded dark label colors
+  if (chartRegistry['holdings']) {
+    chartRegistry['holdings'].updateOptions({
+      legend: { labels: { colors: Array(5).fill(axisColor) } }
     }, false, false);
   }
 }
@@ -1285,6 +1405,18 @@ function initMarketFilters() {
       renderMarketTable();
     });
   });
+
+  // Watch button clicks — event delegation on the table body
+  const tbody = $('#mktTableBody');
+  if (tbody) {
+    tbody.addEventListener('click', e => {
+      const btn = e.target.closest('[data-watch]');
+      if (btn) {
+        e.stopPropagation();
+        toggleWatchlist(btn.getAttribute('data-watch'));
+      }
+    });
+  }
 }
 
 /* ══════════════════════════════════════════════
@@ -1341,6 +1473,7 @@ function init() {
   initTheme();
   initClock();
   initNavigation();
+  initMobileMenu();
   initTicker();
 
   // Render data into DOM
@@ -1378,11 +1511,7 @@ function init() {
     if (activeTheme === 'light') updateChartsTheme('light');
   }, 200);
 
-  // Entrance animations + tilt
-  initEntranceAnimations();
-  initTiltEffect();
-
-  // Counter animation
+  // Counter animation (subtle, kept)
   animateCounters();
 
   // Live price updates

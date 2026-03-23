@@ -45,7 +45,7 @@
   --negative: #DC2626;
   --text-1:   #1A1D2E;
   --text-2:   #5A6478;
-  --text-3:   #9AA3B2;
+  --text-3:   #6B7280;
   --glow:     rgba(108,99,255,0.06);
   --shadow:   0 4px 24px rgba(108,99,255,0.10);
 }
@@ -621,8 +621,7 @@ select {
   border: 1px solid var(--border);
   border-radius: var(--r);
   padding: 18px;
-  transition: var(--t);
-  will-change: transform;
+  transition: border-color 0.2s ease;
 }
 
 .card:hover {
@@ -1616,16 +1615,7 @@ select {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.entrance {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.entrance.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* entrance / tilt animations removed — dashboard should feel instant */
 
 /* ══════════════════════════════════════════════
    HOLDINGS TABLE SPECIFICS
@@ -1697,12 +1687,44 @@ select {
   .wallet-pill {
     display: none;
   }
+  .nav-hamburger {
+    display: flex;
+  }
   .page {
     padding: 14px 16px;
   }
   .nav-search-wrap {
     display: none;
   }
+  .time-tabs {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  /* Nav tabs (Markets/Portfolio/etc) — scroll horizontally on mobile */
+  .nav-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab { flex-shrink: 0; }
+}
+
+@media (max-width: 480px) {
+  /* Asset rows — hide sparkline and % change columns to fit 390px */
+  .asset-row {
+    grid-template-columns: 28px 1fr 80px;
+  }
+  .row-spark,
+  .row-change { display: none; }
+
+  /* Market table — horizontal scroll instead of overflow */
+  .card:has(.mkt-table) { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .mkt-table { min-width: 480px; }
+
+  /* Ticker item padding tighter */
+  .ticker-item { padding: 0 12px; font-size: 11px; }
 }
 
 @media (max-width: 480px) {
@@ -1719,3 +1741,180 @@ select {
     justify-content: flex-start;
   }
 }
+
+html, body { overflow-x: hidden; max-width: 100%; }
+
+/* ── Min-width: 0 on all grid children to prevent overflow clipping ── */
+.r1-grid > *,
+.r2-grid > *,
+.r4-grid > *,
+.port-summary-grid > *,
+.port-charts-row > * {
+  min-width: 0;
+}
+
+/* ── Prevent ApexCharts SVG from bleeding outside card ── */
+.card .apexcharts-canvas {
+  max-width: 100% !important;
+}
+
+/* ── Light mode: coming-soon icon uses border-2 which is near-invisible ── */
+[data-theme="light"] .coming-soon i {
+  color: var(--purple);
+  opacity: 0.6;
+}
+
+/* ── Light mode: Portfolio KPI card labels ── */
+[data-theme="light"] .pkl {
+  color: var(--text-2);
+}
+
+/* ── Light mode: table header text ── */
+[data-theme="light"] .mkt-table thead th {
+  color: var(--text-2);
+  background: var(--bg-card2);
+}
+
+/* ── Light mode: card-label (uppercase metric labels) ── */
+[data-theme="light"] .card-label {
+  color: var(--text-2);
+}
+
+/* ── Light mode: nav clock ── */
+[data-theme="light"] .nav-clock {
+  color: var(--text-2);
+}
+
+/* ══════════════════════════════════════════════
+   HAMBURGER BUTTON
+   ══════════════════════════════════════════════ */
+.nav-hamburger {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-card2);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease;
+}
+
+.nav-hamburger:hover {
+  border-color: var(--border-2);
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 16px;
+  height: 2px;
+  background: var(--text-2);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease, width 0.25s ease;
+  transform-origin: center;
+}
+
+/* X state when menu is open */
+.nav-hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-hamburger.open span:nth-child(2) {
+  opacity: 0;
+  width: 0;
+}
+.nav-hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ══════════════════════════════════════════════
+   MOBILE NAV MENU
+   ══════════════════════════════════════════════ */
+.mobile-nav {
+  display: none; /* shown only on mobile when open */
+  position: fixed;
+  top: calc(var(--navbar-h) + var(--ticker-h));
+  left: 0;
+  right: 0;
+  z-index: 180;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 12px 12px;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  animation: slideDown 0.2s ease;
+}
+
+.mobile-nav.open {
+  display: flex;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mobile-nav-tab i {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.mobile-nav-tab:hover {
+  background: var(--bg-card2);
+  color: var(--text-1);
+}
+
+.mobile-nav-tab.active {
+  background: rgba(123,111,240,0.12);
+  color: var(--purple);
+  font-weight: 600;
+}
+
+/* ── Hide hamburger on desktop (must come after base block to win the cascade) ── */
+@media (min-width: 769px) {
+  .nav-hamburger { display: none; }
+}
+
+/* ── Hide nav clock on very small phones to prevent navbar overflow ── */
+@media (max-width: 380px) {
+  .nav-clock { display: none; }
+  .navbar { padding: 0 12px; }
+  .page { padding: 10px 12px; }
+}
+
+/* ── Watchlist star button ── */
+.watch-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--text-3);
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+  line-height: 1;
+}
+.watch-btn:hover { color: var(--warning); }
+.watch-btn.active { color: var(--warning); }
