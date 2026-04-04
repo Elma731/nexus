@@ -1712,12 +1712,12 @@ select {
 }
 
 @media (max-width: 480px) {
-  /* Asset rows — hide sparkline and % change columns to fit 390px */
+  /* Asset rows — hide sparkline, keep rank/coin/price/change in one row */
   .asset-row {
-    grid-template-columns: 28px 1fr 80px;
+    grid-template-columns: 28px 1fr auto auto;
+    gap: 6px;
   }
-  .row-spark,
-  .row-change { display: none; }
+  .spark-wrap { display: none; }
 
   /* Market table — horizontal scroll instead of overflow */
   .card:has(.mkt-table) { overflow-x: auto; -webkit-overflow-scrolling: touch; }
