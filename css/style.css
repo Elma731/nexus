@@ -751,7 +751,7 @@ select {
 
 .asset-row {
   display: grid;
-  grid-template-columns: 28px 1fr 64px 80px 72px;
+  grid-template-columns: 28px minmax(0, 1fr) 64px 80px 72px;
   align-items: center;
   gap: 8px;
   padding: 8px 6px;
@@ -760,6 +760,8 @@ select {
   cursor: pointer;
   min-height: 44px;
 }
+
+.asset-row > * { min-width: 0; }
 
 .asset-row:hover {
   background: rgba(123,111,240,0.06);
@@ -1711,10 +1713,10 @@ select {
   .nav-tab { flex-shrink: 0; }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   /* Asset rows — hide sparkline, keep rank/coin/price/change in one row */
   .asset-row {
-    grid-template-columns: 28px 1fr auto auto;
+    grid-template-columns: 28px minmax(0, 1fr) auto auto;
     gap: 6px;
   }
   .spark-wrap { display: none; }
