@@ -68,7 +68,7 @@ body {
   overflow: hidden;
   background: var(--bg);
   color: var(--text-1);
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -153,7 +153,7 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 900;
   font-size: 16px;
   color: #fff;
@@ -161,7 +161,7 @@ select {
 }
 
 .logo-text {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 800;
   font-size: 16px;
   color: var(--text-1);
@@ -247,7 +247,7 @@ select {
   border-radius: var(--r-pill);
   font-size: 12.5px;
   font-weight: 500;
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   color: var(--text-2);
   transition: var(--t);
   white-space: nowrap;
@@ -337,7 +337,7 @@ select {
 
 .nav-clock {
   font-size: 11px;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 600;
   color: var(--text-3);
   padding: 4px 8px;
@@ -355,7 +355,7 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 11px;
   font-weight: 800;
   color: #fff;
@@ -435,14 +435,14 @@ select {
 }
 
 .t-sym {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 12px;
   font-weight: 700;
   color: var(--text-1);
 }
 
 .t-price {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 12px;
   font-weight: 600;
   color: var(--text-2);
@@ -520,7 +520,7 @@ select {
 }
 
 .page-title {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 800;
   font-size: 1.6rem;
   color: var(--text-1);
@@ -637,7 +637,7 @@ select {
 }
 
 .card-title {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   font-weight: 700;
   color: var(--text-1);
@@ -684,7 +684,7 @@ select {
    BIG NUMBERS
    ══════════════════════════════════════════════ */
 .big-num {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1.8rem;
   font-weight: 800;
   color: var(--text-1);
@@ -706,7 +706,7 @@ select {
 }
 
 .mini-val {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1.5rem;
   font-weight: 800;
   color: var(--text-1);
@@ -788,7 +788,7 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 800;
   font-size: 8px;
   flex-shrink: 0;
@@ -824,7 +824,7 @@ select {
 }
 
 .asset-price {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 12.5px;
   font-weight: 700;
   color: var(--text-1);
@@ -965,14 +965,14 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 800;
   font-size: 9px;
   flex-shrink: 0;
 }
 
 .mkt-price {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 13.5px;
   font-weight: 700;
   color: var(--text-1);
@@ -985,7 +985,7 @@ select {
   padding: 3px 8px;
   border-radius: 5px;
   display: inline-block;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .chg-badge.up {
@@ -1002,7 +1002,7 @@ select {
   font-size: 12.5px;
   color: var(--text-2);
   text-align: right;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .trade-btn {
@@ -1162,7 +1162,7 @@ select {
   font-size: 12.5px;
   font-weight: 700;
   color: var(--text-1);
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .act-val.negative {
@@ -1211,7 +1211,7 @@ select {
   font-size: 12px;
   font-weight: 700;
   color: var(--text-1);
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .pl-val {
@@ -1259,7 +1259,7 @@ select {
   font-size: 11px;
   font-weight: 700;
   color: var(--text-1);
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   width: 24px;
   text-align: right;
 }
@@ -1298,7 +1298,7 @@ select {
 
 .pkv {
   display: block;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1.35rem;
   font-weight: 800;
   color: var(--text-1);
@@ -1369,7 +1369,7 @@ select {
 }
 
 .coming-soon h2 {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1.6rem;
   font-weight: 800;
   color: var(--text-1);
@@ -1391,7 +1391,7 @@ select {
   border-radius: var(--r-sm);
   font-size: 13px;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   transition: var(--t);
   border: 1px solid transparent;
 }
@@ -1496,7 +1496,7 @@ select {
 }
 
 .footer-name {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 800;
   font-size: 15px;
   color: var(--text-1);
@@ -1867,7 +1867,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
   border-radius: var(--r-sm);
   font-size: 14px;
   font-weight: 500;
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   color: var(--text-2);
   background: none;
   border: none;

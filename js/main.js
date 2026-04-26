@@ -810,7 +810,7 @@ function initCandlestickChart() {
       background: 'transparent',
       toolbar: { show: false },
       animations: { enabled: true, speed: 600 },
-      fontFamily: 'Inter, sans-serif',
+      fontFamily: 'DM Sans, sans-serif',
     },
     series: [{ name: 'BTC/USD', data: ohlcData }],
     plotOptions: {
@@ -825,7 +825,7 @@ function initCandlestickChart() {
     xaxis: {
       type: 'datetime',
       labels: {
-        style: { fontFamily: 'Inter, sans-serif', colors: '#9B96C4', fontSize: '10px' },
+        style: { fontFamily: 'DM Sans, sans-serif', colors: '#9B96C4', fontSize: '10px' },
         datetimeFormatter: { day: 'MMM dd' }
       },
       axisBorder: { show: false },
@@ -834,7 +834,7 @@ function initCandlestickChart() {
     yaxis: {
       labels: {
         formatter: v => '$' + (v / 1000).toFixed(0) + 'k',
-        style: { fontFamily: 'Manrope, sans-serif', colors: '#9B96C4', fontSize: '10px' }
+        style: { fontFamily: 'DM Sans, sans-serif', colors: '#9B96C4', fontSize: '10px' }
       }
     },
     grid: {
@@ -888,7 +888,7 @@ function initAreaChart() {
       background: 'transparent',
       toolbar: { show: false },
       animations: { enabled: true, speed: 800 },
-      fontFamily: 'Inter, sans-serif',
+      fontFamily: 'DM Sans, sans-serif',
     },
     series: [{ name: 'Volume', data: seriesData }],
     stroke: {
@@ -912,7 +912,7 @@ function initAreaChart() {
     xaxis: {
       type: 'datetime',
       labels: {
-        style: { fontFamily: 'Inter, sans-serif', colors: '#9B96C4', fontSize: '10px' }
+        style: { fontFamily: 'DM Sans, sans-serif', colors: '#9B96C4', fontSize: '10px' }
       },
       axisBorder: { show: false },
       axisTicks: { show: false }
@@ -920,7 +920,7 @@ function initAreaChart() {
     yaxis: {
       labels: {
         formatter: v => '$' + (v / 1000).toFixed(0) + 'k',
-        style: { fontFamily: 'Manrope, sans-serif', colors: '#9B96C4', fontSize: '10px' }
+        style: { fontFamily: 'DM Sans, sans-serif', colors: '#9B96C4', fontSize: '10px' }
       }
     },
     grid: {
@@ -974,14 +974,14 @@ function initBTCDomChart() {
               show: true,
               label: 'Dominance',
               formatter: () => '52.3%',
-              fontFamily: 'Manrope, sans-serif',
+              fontFamily: 'DM Sans, sans-serif',
               fontSize: '11px',
               color: '#F1F0FF',
               fontWeight: 700
             },
             value: {
               show: true,
-              fontFamily: 'Manrope, sans-serif',
+              fontFamily: 'DM Sans, sans-serif',
               fontSize: '12px',
               fontWeight: 700,
               color: '#F1F0FF',
@@ -1030,14 +1030,14 @@ function initPortfolioDonut() {
               show: true,
               label: 'Total',
               formatter: () => '$42.8k',
-              fontFamily: 'Manrope, sans-serif',
+              fontFamily: 'DM Sans, sans-serif',
               fontSize: '13px',
               color: '#F1F0FF',
               fontWeight: 700
             },
             value: {
               show: true,
-              fontFamily: 'Manrope, sans-serif',
+              fontFamily: 'DM Sans, sans-serif',
               fontSize: '14px',
               fontWeight: 700,
               color: '#F1F0FF',
@@ -1091,7 +1091,7 @@ function initFearGreedGauge() {
             show: true,
             offsetY: 26,
             fontSize: '12px',
-            fontFamily: 'Inter, sans-serif',
+            fontFamily: 'DM Sans, sans-serif',
             color: '#9B96C4',
             formatter: () => 'Greed'
           },
@@ -1100,7 +1100,7 @@ function initFearGreedGauge() {
             offsetY: -8,
             fontSize: '28px',
             fontWeight: 800,
-            fontFamily: 'Manrope, sans-serif',
+            fontFamily: 'DM Sans, sans-serif',
             color: '#F1F0FF',
             formatter: () => '72'
           }
@@ -1156,14 +1156,14 @@ function initHoldingsChart() {
               show: true,
               label: 'Portfolio',
               formatter: () => '$42.8k',
-              fontFamily: 'Manrope, sans-serif',
+              fontFamily: 'DM Sans, sans-serif',
               fontSize: '13px',
               color: '#F1F0FF',
               fontWeight: 700
             },
             value: {
               show: true,
-              fontFamily: 'Manrope, sans-serif',
+              fontFamily: 'DM Sans, sans-serif',
               fontSize: '15px',
               fontWeight: 700,
               color: '#F1F0FF',
@@ -1177,7 +1177,7 @@ function initHoldingsChart() {
     legend: {
       show: true,
       position: 'right',
-      fontFamily: 'Inter, sans-serif',
+      fontFamily: 'DM Sans, sans-serif',
       fontSize: '12px',
       labels: {
         colors: ['#9B96C4','#9B96C4','#9B96C4','#9B96C4','#9B96C4']
@@ -1215,7 +1215,7 @@ function initGrowthChart() {
       background: 'transparent',
       toolbar: { show: false },
       animations: { enabled: true, speed: 800 },
-      fontFamily: 'Inter, sans-serif',
+      fontFamily: 'DM Sans, sans-serif',
     },
     series: [
       { name: 'Current Value', data: valueSeries.map(p => ({ x: p.x, y: p.y })) },
@@ -1234,7 +1234,7 @@ function initGrowthChart() {
     xaxis: {
       type: 'datetime',
       labels: {
-        style: { fontFamily: 'Inter, sans-serif', colors: '#9B96C4', fontSize: '10px' }
+        style: { fontFamily: 'DM Sans, sans-serif', colors: '#9B96C4', fontSize: '10px' }
       },
       axisBorder: { show: false },
       axisTicks: { show: false }
@@ -1242,7 +1242,7 @@ function initGrowthChart() {
     yaxis: {
       labels: {
         formatter: v => '$' + (v / 1000).toFixed(0) + 'k',
-        style: { fontFamily: 'Manrope, sans-serif', colors: '#9B96C4', fontSize: '10px' }
+        style: { fontFamily: 'DM Sans, sans-serif', colors: '#9B96C4', fontSize: '10px' }
       }
     },
     grid: {
@@ -1252,7 +1252,7 @@ function initGrowthChart() {
     legend: {
       show: true,
       position: 'top',
-      fontFamily: 'Inter, sans-serif',
+      fontFamily: 'DM Sans, sans-serif',
       fontSize: '12px',
       labels: { colors: ['#9B96C4','#9B96C4'] }
     },
