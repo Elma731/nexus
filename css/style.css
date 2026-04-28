@@ -1698,6 +1698,9 @@ select {
   .nav-search-wrap {
     display: none;
   }
+  /* Hide clock and avatar so hamburger never gets pushed off-screen */
+  .nav-clock { display: none; }
+  .nav-avatar { display: none; }
   .time-tabs {
     flex-wrap: wrap;
     gap: 4px;
@@ -1711,6 +1714,11 @@ select {
   }
   .nav-tabs::-webkit-scrollbar { display: none; }
   .nav-tab { flex-shrink: 0; }
+  /* Footer: stack at 768px to prevent overflow */
+  .footer-inner { flex-direction: column; gap: 16px; }
+  .footer-left { min-width: 0; }
+  .footer-right { align-items: flex-start; }
+  .footer-links { justify-content: flex-start; }
 }
 
 @media (max-width: 600px) {
