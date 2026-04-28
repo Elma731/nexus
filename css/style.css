@@ -1718,7 +1718,7 @@ select {
   .footer-inner { flex-direction: column; gap: 16px; }
   .footer-left { min-width: 0; }
   .footer-right { align-items: flex-start; }
-  .footer-links { justify-content: flex-start; }
+  .footer-links { justify-content: flex-start; flex-wrap: wrap; gap: 8px 12px; }
 }
 
 @media (max-width: 600px) {
