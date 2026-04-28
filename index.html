@@ -35,6 +35,20 @@
 
   <!-- Main CSS -->
   <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    @media (max-width: 768px) {
+      .nexus-footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
+      .nexus-footer-links {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -442,6 +456,25 @@
         <button class="btn btn-primary">Go to Explore</button>
       </div>
     </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- FOOTER                                 -->
+    <!-- ══════════════════════════════════════ -->
+    <footer style="background:#0C0B14;border-top:1px solid #2A2640;padding:32px 24px;width:100%;">
+      <div class="nexus-footer-inner" style="max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+        <div>
+          <span style="font-family:Manrope,sans-serif;font-weight:700;font-size:1rem;color:#F1F0FF;">Nexus</span><span style="color:#7B6FF0;"> PRO</span>
+          <p style="font-family:Inter,sans-serif;font-size:0.78rem;color:#4E4A6A;margin-top:4px;margin-bottom:0;">Professional crypto analytics. Available worldwide.</p>
+        </div>
+        <div class="nexus-footer-links" style="display:flex;gap:24px;flex-wrap:wrap;">
+          <a href="#" style="font-family:Inter,sans-serif;font-size:0.8rem;color:#4E4A6A;text-decoration:none;">Privacy Policy</a>
+          <a href="#" style="font-family:Inter,sans-serif;font-size:0.8rem;color:#4E4A6A;text-decoration:none;">Terms of Service</a>
+          <a href="#" style="font-family:Inter,sans-serif;font-size:0.8rem;color:#4E4A6A;text-decoration:none;">Cookie Policy</a>
+          <a href="#" style="font-family:Inter,sans-serif;font-size:0.8rem;color:#4E4A6A;text-decoration:none;">Help Center</a>
+        </div>
+        <p style="font-family:Inter,sans-serif;font-size:0.78rem;color:#4E4A6A;margin:0;">© 2026 Nexus Analytics, Inc. Prices in USD. Not financial advice.</p>
+      </div>
+    </footer>
 
   </div>
   <!-- /app-content -->

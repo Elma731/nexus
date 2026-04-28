@@ -1920,3 +1920,9 @@ html, body { overflow-x: hidden; max-width: 100%; }
 }
 .watch-btn:hover { color: var(--warning); }
 .watch-btn.active { color: var(--warning); }
+
+/* ── Mobile: bump base font-size for readability ── */
+@media (max-width: 768px) {
+  body { font-size: 15px; }
+  input, textarea, select { font-size: 1rem; }
+}
