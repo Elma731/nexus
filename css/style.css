@@ -1473,7 +1473,7 @@ select {
 .nexus-footer {
   background: var(--bg-card);
   border-top: 1px solid var(--border);
-  padding: 24px 24px 24px 28px;
+  padding: 24px;
 }
 
 .footer-inner {
@@ -1701,6 +1701,10 @@ select {
   /* Hide clock and avatar so hamburger never gets pushed off-screen */
   .nav-clock { display: none; }
   .nav-avatar { display: none; }
+  /* Remove scrollbar on mobile so it doesn't reserve right-edge space,
+     which would otherwise leave a gap beside the full-width footer */
+  .app-content { scrollbar-width: none; }
+  .app-content::-webkit-scrollbar { display: none; width: 0; }
   .time-tabs {
     flex-wrap: wrap;
     gap: 4px;
