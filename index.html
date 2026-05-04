@@ -38,29 +38,14 @@
 
   <style>
     @media (max-width: 768px) {
-      /* Second footer: override inline display:flex so column stacking works */
       .nexus-footer-inner {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        text-align: left !important;
-        gap: 12px !important;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
       }
-      /* Every direct child of footer-inner takes full width so text wraps */
-      .nexus-footer-inner > div,
-      .nexus-footer-inner > p {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        word-break: break-word !important;
-        white-space: normal !important;
-      }
-      /* Links: override inline gap:24px so they don't overflow */
       .nexus-footer-links {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: wrap !important;
-        gap: 8px 14px !important;
-        width: 100% !important;
+        flex-direction: column;
+        gap: 12px;
       }
     }
   </style>
